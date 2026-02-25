@@ -1,5 +1,4 @@
 package com.example.myapplication1
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +14,6 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,18 +24,17 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         val tvHelloWorld = findViewById<TextView>(R.id.tvHelloWorld)
         val tvThisIs = findViewById<TextView>(R.id.tvThisIs)
         val btnNextActivity = findViewById<Button>(R.id.btnNextActivity)
         val btnProfile = findViewById<Button>(R.id.btnProfile)
-        val btnProduct = findViewById<Button>(R.id.btnProduct)
-        val btnLiveCycle = findViewById<Button>(R.id.btnLiveCycle)
+        val btnProducts = findViewById<Button>(R.id.btnProducts)
+        val btnlifeCycles = findViewById<Button>(R.id.btnlifeCycles)
 
         val getResult = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
-            when (result.resultCode) {
+            when (result.resultCode){
                 RESULT_OK -> {
                     val data: Intent? = result.data
                     val message = data?.getStringExtra("my_key")
@@ -48,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
         tvThisIs.setOnClickListener {
             if (tvHelloWorld.currentTextColor == getColor(R.color.red)) {
                 tvHelloWorld.setTextColor(getColor(R.color.white))
@@ -56,42 +52,42 @@ class MainActivity : AppCompatActivity() {
                 tvHelloWorld.setTextColor(getColor(R.color.red))
             }
         }
-
-        btnNextActivity.setOnClickListener {
-            val intent = Intent(this, SecondActivity::class.java)
+        btnNextActivity.setOnClickListener{
+            val intent = (Intent(this, SecondActivity::class.java))
             intent.putExtra("main", "test")
             startActivity(intent)
         }
-
         btnProfile.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
             getResult.launch(intent)
         }
 
-        btnProduct.setOnClickListener {
+        btnProducts.setOnClickListener {
             val intent = Intent(this, ProductsActivity::class.java)
             getResult.launch(intent)
         }
 
-        btnLiveCycle.setOnClickListener {
+        btnlifeCycles.setOnClickListener {
             val intent = Intent(this, liveCycleActivity::class.java)
-            getResult.launch(intent)
+            startActivity(intent)
         }
 
-
         onBackPressedDispatcher.addCallback(
-            this,
-            object : OnBackPressedCallback(true) {
+            owner = this,
+            object : OnBackPressedCallback(true){
                 override fun handleOnBackPressed() {
-                    showAlert(close = { finish() })
+                    showAlert(
+                        close = {
+                            finish()
+                        },
+                    )
                 }
-            })
+            }
+        )
     }
-
-
-  fun showAlert(close: () -> Unit, size: Int? = null) {
+    fun showAlert(close: () -> Unit, size: Int? = null){
         val builder = MaterialAlertDialogBuilder(this)
-        builder.setTitle("Close App?")
+        builder.setTitle("Close app?")
         builder.setMessage("description")
 
         size?.let { sizeIt ->
@@ -100,10 +96,10 @@ class MainActivity : AppCompatActivity() {
             Log.d("size", "size is null")
         }
 
-        builder.setPositiveButton("Discard") { dialog, which ->
+        builder.setPositiveButton("Discard") { dialog, _ ->
             dialog.dismiss()
         }
-        builder.setNegativeButton("Close"){dialog, which ->
+        builder.setNegativeButton("Close") { dialog, _ ->
             close()
         }
         builder.show()

@@ -1,6 +1,9 @@
 package com.example.myapplication1
 
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +18,14 @@ class SecondActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+        val ivCat = findViewById<ImageView>(R.id.ivTurtle)
+        val tvMainText = findViewById<TextView>(R.id.tvMainData)
+
+        tvMainText.text = intent.getStringExtra("main")
+
+        ivCat.setOnClickListener {
+            Toast.makeText(this, "This is turtle", Toast.LENGTH_SHORT).show()
         }
     }
 }

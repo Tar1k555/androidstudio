@@ -24,9 +24,6 @@
             android:theme="@style/Theme.MyApplication1.NoActionBar"
             tools:targetApi="24" />
         <activity
-            android:name=".ui.ProductAdapter"
-            android:exported="false" />
-        <activity
             android:name=".SecondActivity"
             android:exported="false" />
         <activity
